@@ -8,8 +8,10 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		me.levelDirector.loadLevel("level01");
 
-		var player = me.pool.pull("player", 0, 420, ()); /*making a vatriable for the player*/
+		var player = me.pool.pull("player", 0, 0, {}); /*making a vatriable for the player*/
 		me.game.world.addChild(player, 5); /* where it has to be placed in the game*/
+
+		me.input.bindKey(me.input.KEY.RIGHT, "right");
 
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();

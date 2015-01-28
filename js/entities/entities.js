@@ -12,7 +12,7 @@
 
         }]);
         
-        this.body.setVelocity(5, 20); 
+        this.body.setVelocity(5, 20); // setting velocity to its number and changed 0 to 20
 
  	},
 

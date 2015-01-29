@@ -47,11 +47,11 @@
  	}
  });
 
- game.PlayerBaseEntity = me.Entity.extend({
+ game.PlayerBaseEntity = me.Entity.extend({ // addding the player base tower
  	init: function(x, y, settings) {
             this._super(me.Entity, 'init', [x, y,{
-                image:"tower",
-                width: 100,
+                image:"tower", 
+                width: 100,     // height and width of image
                 height: 100,
                 spritewidth: "100",
                 spriteheight: "100",
@@ -59,15 +59,15 @@
                 	return (new me.Rect(0, 0 100, 100)).toPolygon();
                 }
             }]);
-            this.broken = false;
-            this.health = 10;
+            this.broken = false;  //to know its not broken
+            this.health = 10;    // its healtj
             this.alwaysUpdate = true;
             this.body.onCollision = this.onCollision.bind(this);
 
             this.type = "PlayerBaseEntity";
  		},
 
- 		update:function(delta) {
+ 		update:function(delta) { // delta function
             if(this.health<=0) {
             	this.broken = true;
             }
@@ -82,7 +82,7 @@
  		}
  	}); 	
 
-  game.EnemyBaseEntity = me.Entity.extend({
+  game.EnemyBaseEntity = me.Entity.extend({ // same as player base entity just the enemy
  	init: function(x, y, settings) {
             this._super(me.Entity, 'init', [x, y,{
                 image:"tower",

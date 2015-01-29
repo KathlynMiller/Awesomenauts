@@ -15,7 +15,7 @@
         this.body.setVelocity(5, 20); // setting velocity to its number and changed 0 to 20
 
         this.renderable.addAnimation("idle", [78]);
-        this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
+        this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); // using images for animation
 
         this.renderable.setCurrentAnimation("idle");
  	},
@@ -31,10 +31,11 @@
  			this.body.vel.x = 0;
  		}
         
-        if(this.body.vel.x !== 0) {
- 		  if(!this.renderable.isCurrentAnimation("walk")) {
-            this.renderable.setCurrentAnimation("walk");
- 		   }
+        if(this.body.vel.x !== 0) { // velocity
+ 		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
+            this.renderable.setCurrentAnimation("walk");  // telling
+
+ 		  }
         }else{
       	   this.renderable.setCurrentAnimation("idle");
         } 
@@ -44,4 +45,6 @@
         this._super(me.Entity, "update", [delta]);
         return true;
  	}
-});
+ });
+
+ 

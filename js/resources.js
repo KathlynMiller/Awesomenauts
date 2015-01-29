@@ -7,6 +7,7 @@ game.resources = [
     {name: "background-tiles", type:"image", src: "data/img/background-tiles.png"}, /*adding background-tiles images*/
     {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"}, /* adding meta-tiles images*/
     {name: "player", type:"image", src: "data/img/orcSpear.png"}, /*adding player images to game*/
+    {name: "tower", type:"image", src: "data/img/tower_round.syg.png"}, /*adding player images to game*/
 	/* Atalases
 	 * @example
 	 * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},

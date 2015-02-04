@@ -14,7 +14,7 @@
         
         this.body.setVelocity(5, 20); // setting velocity to its number and changed 0 to 20
        
-        this.facing = "right";
+        this.facing = "right";  //Keeps track of which direction your player is going
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
 
         this.renderable.addAnimation("idle", [78]);
@@ -33,9 +33,11 @@
             //me.timer.tick makes the movement look smooth
  			this.body.vel.x += this.body.accel.x * me.timer.tick;
  			this.facing = "right";
+ 			 //Keeps track of which direction your player is going
  			this.flipX(true);
  	    }else if(me.input.isKeyPressed("left")) {  //making my player move to the right
  	       this.facing = "left";
+ 	        //Keeps track of which direction your player is going
  	       this.body.vel.x -=this.body.accel.x * me.timer.tick;
  	       this.flipX(false);
  		}else{

@@ -11,10 +11,10 @@ game.PlayScreen = me.ScreenObject.extend({
 		var player = me.pool.pull("player", 0, 0, {}); /*making a vatriable for the player*/
 		me.game.world.addChild(player, 5); /* where it has to be placed in the game*/
 
-		me.input.bindKey(me.input.KEY.RIGHT, "right");
-		me.input.bindKey(me.input.KEY.LEFT, "left");
-		me.input.bindKey(me.input.KEY.SPACE, "jump");
-		me.input.bindKey(me.input.KEY.A, "attack");
+		me.input.bindKey(me.input.KEY.RIGHT, "right"); // right key
+		me.input.bindKey(me.input.KEY.LEFT, "left");  // left key
+		me.input.bindKey(me.input.KEY.SPACE, "jump"); // space key
+		me.input.bindKey(me.input.KEY.A, "attack"); // letter A key
 
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();

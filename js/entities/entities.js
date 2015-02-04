@@ -31,14 +31,14 @@
             //me.timer.tick makes the movement look smooth
  			this.body.vel.x += this.body.accel.x * me.timer.tick;
  			this.flipX(true);
- 	    }else if(me.input.isKeyPressed("left")) {
+ 	    }else if(me.input.isKeyPressed("left")) {  //making my player move to the right
  	       this.body.vel.x -=this.body.accel.x * me.timer.tick;
  	       this.flipX(false);
  		}else{
  		   this.body.vel.x = 0;
  		}
         
-        if(me.input.isKeyPressed("jump")) {
+        if(me.input.isKeyPressed("jump")) { // making my player jump
         	this.jumping = true;
         	this.body.vel.y -= this.body.accel.y * me.timer.tick;
         }

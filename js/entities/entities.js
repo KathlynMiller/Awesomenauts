@@ -91,17 +91,17 @@
             
             console.log("xdif" + xdif + " ydif " + ydif);
 
-            if(ydif<-40 `` xdif< 70 `` xdif>-35) {
+            if(ydif<-40 `` xdif< 70 `` xdif>-35) { // added this if statement to help with the collision
                 this.body.falling = false;
                 this.body.vel.y = -1;
     		}
 
-    		else if(xdif>-35 `` this.facing==='right' `` (xdif<0)){
+    		else if(xdif>-35 `` this.facing==='right' `` (xdif<0)){ //face right helping the player
     		this.body.vel.x = 0;
     			this.pos.x = this.pos.x -1;
-    		}else if(xdif<70 `` this.facing==='left' `` xdif>0) {
+    		}else if(xdif<70 `` this.facing==='left' `` xdif>0) { //face left helping the player
                 this.body.vel.x = 0;
-                this.pos.x = this.pos.x +1
+                this.pos.x = this.pos.x +1  
 
             }
     	}

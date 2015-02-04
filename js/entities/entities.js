@@ -38,9 +38,15 @@
  		 if(me.input.isKeyPressed("attack")) {
  			if(!this.renderable.isCurrentAnimation("attack")) {
  			console.log(!this.rendrable.isCurrentAnimation("attack"));
-            
+            //sets the currnet animation to attak and once that is over
+            //goes back to the idle animation
+
+
                 this.renderable.setCurrentAnimation("attack", "idle");
-                
+                //Makes it so that the next time we start this sequence we begin
+                //from the first animation, not wherever we left off when we 
+                //switched to another animation
+        
                 this.renderable.setAnimationFrame();
  		    }
         }  

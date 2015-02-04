@@ -17,8 +17,11 @@
 
         this.renderable.addAnimation("idle", [78]);
         this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); // using images for animation
+        this.renerable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
 
         this.renderable.setCurrentAnimation("idle");
+
+
  	},
 
  	update: function(delta) {
@@ -31,8 +34,19 @@
  		}else {
  			this.body.vel.x = 0;
  		}
-        
-        if(this.body.vel.x !== 0) { // velocity
+
+ 		 if(me.input.isKeyPressed("attack")) {
+ 			if(!this.renderable.isCurrentAnimation("attack")) {
+ 			console.log(!this.rendrable.isCurrentAnimation("attack"));
+            
+                this.renderable.setCurrentAnimation("attack", "idle");
+                
+                this.renderable.setAnimationFrame();
+ 		    }
+        }  
+
+
+        else if(this.body.vel.x !== 0) { // velocity
  		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
             this.renderable.setCurrentAnimation("walk");  // telling
 
@@ -40,12 +54,16 @@
         }else{
       	   this.renderable.setCurrentAnimation("idle");
         } 
-        
+
+       
+
         this.body.update(delta);
 
         this._super(me.Entity, "update", [delta]);
         return true;
  	}
+
+ 	
  });
 
  game.PlayerBaseEntity = me.Entity.extend({ // addding the player base tower
@@ -64,6 +82,7 @@
             this.health = 10;    // its healtj
             this.alwaysUpdate = true;
             this.body.onCollision = this.onCollision.bind(this);
+            console.log("init");
             this.type = "PlayerBaseEntity";
 
             this.renderable.addAnimation("idle", [0]);  // added animation for base
@@ -77,7 +96,7 @@
             	this.broken = true;
             	this.renderable.setCurrentAnimation("broken");
             }
-            this,body.update(delta);
+            this.body.update(delta);
 
             this._super(me.Entity, "update", [delta]);
             return true;
@@ -104,6 +123,7 @@
             this.health = 10;
             this.alwaysUpdate = true;
             this.body.onCollision = this.onCollision.bind(this);
+            console.log("init");
             this.type = "EnemyBaseEntity";
 
             this.renderable.addAnimation("idle", [0]); // added animation for base
@@ -116,7 +136,7 @@
             	this.broken = true;
             	this.renderable.setCurrentAnimation("broken");
             }
-            this,body.update(delta);
+            this.body.update(delta);
 
             this._super(me.Entity, "update", [delta]);
             return true;

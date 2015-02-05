@@ -17,7 +17,7 @@
         this.facing = "right";  //Keeps track of which direction your player is going
         this.now = new Date().getTime();
         this.lastHit = this.now();
-        this.lastAttack = new Date().getTime(); //
+        this.lastAttack = new Date().getTime(); //havent used this
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
 
         this.renderable.addAnimation("idle", [78]);
@@ -30,7 +30,7 @@
  	},
 
  	update: function(delta) { 
- 		this.now = new Date().getTime()
+ 		this.now = new Date().getTime() // havent used yet
  		if(me.input.isKeyPressed("right")) {
  			//adds to the postion of my x by adding the velocity defined above in
             //setVelocity() and multiplying it by me.timer.tick.
@@ -109,10 +109,10 @@
 
             }
 
-            if(this.renderable.isCurrentAnimation("attack")`` this.now-this.lastHit >= 1000) {
-            	console.log("tower Hit");
+            if(this.renderable.isCurrentAnimation("attack")`` this.now-this.lastHit >= 1000) { //how many times hitting tower to destroy
+            	console.log("tower Hit"); //hitting tower
             	this.lastHit = this.now;
-            	response.b.loseHealth();
+            	response.b.loseHealth(); // tower losing health
             }
     	}
     }

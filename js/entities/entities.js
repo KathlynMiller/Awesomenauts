@@ -204,16 +204,16 @@
  		}
  	}); 	
 
-  game.EntityCreep = me.Entity.extend({
+  game.EntityCreep = me.Entity.extend({ // creepye entity added
   	init: function(x, y, settings) {
        this._super(me.Entity, 'init', [x, y,{
            image: "creep1",
-           width: 32,
+           width: 32,     // width and height of creep enemy
            height:64,
            spritewidth:"32",
            spritewidth: "64",
            getShape: function() {
-           	   return (new me.Rect(0, 0, 32, 64,)).toPolygon();
+           	   return (new me.Rect(0, 0, 32, 64,)).toPolygon(); // image size
            }
 
        }]);
@@ -224,7 +224,7 @@
 
        this.type = "EnemyCreep";
 
-       this.renderable.addAnimation("walk", [3, 4, 5], 80);
+       this.renderable.addAnimation("walk", [3, 4, 5], 80); // setting animation
        this.renderable.setCurrentAnimation("walk");
     },
 

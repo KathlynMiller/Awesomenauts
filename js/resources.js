@@ -8,7 +8,7 @@ game.resources = [
     {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"}, /* adding meta-tiles images*/
     {name: "player", type:"image", src: "data/img/orcSpear.png"}, /*adding player images to game*/
     {name: "tower", type:"image", src: "data/img/tower_round.svg.png"}, /*adding player images to game*/
-    {name: "creep1", type:"image", src: "data/img/brainmonster.png"},
+    {name: "creep1", type:"image", src: "data/img/brainmonster.png"}, // adding creep enemy to game
 
 	/* Atalases
 	 * @example

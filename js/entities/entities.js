@@ -48,7 +48,7 @@
  		   this.body.vel.x = 0;
  		}
         
-        if(me.input.isKeyPressed("jump")) { // making my player jump
+        if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling) { // making my player jump
         	this.jumping = true;
         	this.body.vel.y -= this.body.accel.y * me.timer.tick;
         }
@@ -71,7 +71,7 @@
         }  
 
 
-        else if(this.body.vel.x !== 0 `` !this.renderable.isCurrentAnimation("attack")) { // velocity
+        else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")) { // velocity
  		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
               this.renderable.setCurrentAnimation("walk");  // telling
 
@@ -95,21 +95,21 @@
             
             console.log("xdif" + xdif + " ydif " + ydif);
 
-            if(ydif<-40 `` xdif< 70 `` xdif>-35) { // added this if statement to help with the collision
+            if(ydif<-40 && xdif< 70 && xdif>-35) { // added this if statement to help with the collision
                 this.body.falling = false;
                 this.body.vel.y = -1;
     		}
 
-    		else if(xdif>-35 `` this.facing==='right' `` (xdif<0)){ //face right helping the player
+    		else if(xdif>-35 && this.facing==='right' && (xdif<0)){ //face right helping the player
     		this.body.vel.x = 0;
     			this.pos.x = this.pos.x -1;
-    		}else if(xdif<70 `` this.facing==='left' `` xdif>0) { //face left helping the player
+    		}else if(xdif<70 && this.facing==='left' && xdif>0) { //face left helping the player
                 this.body.vel.x = 0;
                 this.pos.x = this.pos.x +1  
 
             }
 
-            if(this.renderable.isCurrentAnimation("attack")`` this.now-this.lastHit >= 1000) { //how many times hitting tower to destroy
+            if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000) { //how many times hitting tower to destroy
             	console.log("tower Hit"); //hitting tower
             	this.lastHit = this.now;
             	response.b.loseHealth(); // tower losing health
@@ -204,7 +204,7 @@
  		}
  	}); 	
 
-  game.EntityCreep = me.Entity.extend({ // creepye entity added
+  game.EnemyCreep = me.Entity.extend({ // creepye entity added
   	init: function(x, y, settings) {
        this._super(me.Entity, 'init', [x, y,{
            image: "creep1",
@@ -220,7 +220,7 @@
        this.health = 10;
        this.alwaysUpdate = true;
 
-       this.setVelocity(3, 20);
+       this.body.setVelocity(3, 20);
 
        this.type = "EnemyCreep";
 
@@ -231,4 +231,26 @@
   	update: function() {
 
   	}
+  });
+
+  game.GameManger = Object.extend({
+      init: function(x, y. settings){
+          this.now = new Date().getTime();
+          this.lastCreep = new  Date().getTime();
+
+          this.alwaysUpdate = true;
+      },
+
+      update: function(){
+      	  this.now = new Date().getTime();
+
+      	  if(Math.round(this.now/1000)%10 ===0 %% (this.now - this.lastCreep >= 1000)){
+      	  	this.lastCreep = this.now;
+      	  	var creepe = me.pool.pull("EnemyCreep", 1000, 0, ());
+      	  	me.game.world.addChild(creepe, 5);
+
+
+      	  }
+          return true;
+      }
   });

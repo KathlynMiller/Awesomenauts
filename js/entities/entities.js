@@ -15,6 +15,9 @@
         this.body.setVelocity(5, 20); // setting velocity to its number and changed 0 to 20
        
         this.facing = "right";  //Keeps track of which direction your player is going
+        this.now = new Date().getTime();
+        this.lastHit = this.now();
+        this.lastAttack = new Date().getTime(); //
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
 
         this.renderable.addAnimation("idle", [78]);
@@ -26,7 +29,8 @@
 
  	},
 
- 	update: function(delta) {
+ 	update: function(delta) { 
+ 		this.now = new Date().getTime()
  		if(me.input.isKeyPressed("right")) {
  			//adds to the postion of my x by adding the velocity defined above in
             //setVelocity() and multiplying it by me.timer.tick.
@@ -67,13 +71,13 @@
         }  
 
 
-        else if(this.body.vel.x !== 0) { // velocity
+        else if(this.body.vel.x !== 0 `` !this.renderable.isCurrentAnimation("attack")) { // velocity
  		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
-            this.renderable.setCurrentAnimation("walk");  // telling
+              this.renderable.setCurrentAnimation("walk");  // telling
 
  		  }
-        }else{
-      	   this.renderable.setCurrentAnimation("idle");
+        }else if(!this.renderable.isCurrentAnimation("attack")){
+        	      this.renderable.setCurrentAnimation("idle");
         } 
 
        
@@ -103,6 +107,12 @@
                 this.body.vel.x = 0;
                 this.pos.x = this.pos.x +1  
 
+            }
+
+            if(this.renderable.isCurrentAnimation("attack")`` this.now-this.lastHit >= 1000) {
+            	console.log("tower Hit");
+            	this.lastHit = this.now;
+            	response.b.loseHealth();
             }
     	}
     }
@@ -187,6 +197,10 @@
 
         onCollision: function() {
         	
+ 		},
+
+ 		loseHealth: function() {
+ 			this.health--;
  		}
  	}); 	
 

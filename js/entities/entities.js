@@ -233,7 +233,7 @@
   	}
   });
 
-  game.GameManger = Object.extend({
+  game.GameManager = Object.extend({ // added game man
       init: function(x, y. settings){
           this.now = new Date().getTime();
           this.lastCreep = new  Date().getTime();

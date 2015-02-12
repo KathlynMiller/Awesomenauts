@@ -16,13 +16,13 @@
        
         this.facing = "right";  //Keeps track of which direction your player is going
         this.now = new Date().getTime();
-        this.lastHit = this.now();
+        this.lastHit = this.now;
         this.lastAttack = new Date().getTime(); //havent used this
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
 
         this.renderable.addAnimation("idle", [78]);
         this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); // using images for animation
-        this.renerable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
+        this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
 
         this.renderable.setCurrentAnimation("idle");
 
@@ -56,7 +56,7 @@
 
  		 if(me.input.isKeyPressed("attack")) {
  			if(!this.renderable.isCurrentAnimation("attack")) {
- 			console.log(!this.rendrable.isCurrentAnimation("attack"));
+ 			console.log(!this.renderable.isCurrentAnimation("attack"));
             //sets the currnet animation to attak and once that is over
             //goes back to the idle animation
 
@@ -69,8 +69,6 @@
                 this.renderable.setAnimationFrame();
  		    }
         }  
-
-
         else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")) { // velocity
  		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
               this.renderable.setCurrentAnimation("walk");  // telling
@@ -81,7 +79,7 @@
         } 
 
        
-        me.collision.check(this, true, this.collideHandler.bind(this, true));
+        me.collision.check(this, true, this.collideHandler.bind(this), true);
         this.body.update(delta);
 
         this._super(me.Entity, "update", [delta]);
@@ -89,11 +87,12 @@
  	},
     
     collideHandler:function(response) {
-    	if(response.b.type==='EnemyBaseEntity') {
+    
+    	if(response.b.type ==='EnemyBaseEntity') {
     		var ydif = this.pos.y - response.b.pos.y;
     		var xdif = this.pos.x -response.b.pos.x;
             
-            console.log("xdif" + xdif + " ydif " + ydif);
+            
 
             if(ydif<-40 && xdif< 70 && xdif>-35) { // added this if statement to help with the collision
                 this.body.falling = false;
@@ -135,7 +134,7 @@
             this.health = 10;    // its healtj
             this.alwaysUpdate = true;
             this.body.onCollision = this.onCollision.bind(this);
-            console.log("init");
+            
             this.type = "PlayerBaseEntity";
 
             this.renderable.addAnimation("idle", [0]);  // added animation for base
@@ -176,7 +175,7 @@
             this.health = 10;
             this.alwaysUpdate = true;
             this.body.onCollision = this.onCollision.bind(this);
-            console.log("init");
+            
             this.type = "EnemyBaseEntity";
 
             this.renderable.addAnimation("idle", [0]); // added animation for base
@@ -211,9 +210,9 @@
            width: 32,     // width and height of creep enemy
            height:64,
            spritewidth:"32",
-           spritewidth: "64",
+           spriteheight: "64",
            getShape: function() {
-           	   return (new me.Rect(0, 0, 32, 64,)).toPolygon(); // image size
+           	   return (new me.Rect(0, 0, 32, 64)).toPolygon(); // image size
            }
 
        }]);
@@ -228,13 +227,23 @@
        this.renderable.setCurrentAnimation("walk");
     },
 
-  	update: function() {
+  	update: function(delta) {
 
+  	   this.body.vel.x -= this.body.accel.x * me.timer.tick;
+
+
+  	   this.body.update(delta);
+
+
+
+       this._super(me.Entity, "update", [delta]);
+
+       return true;
   	}
   });
 
   game.GameManager = Object.extend({ // added game man
-      init: function(x, y. settings){
+      init: function(x, y, settings){
           this.now = new Date().getTime();
           this.lastCreep = new  Date().getTime();
 
@@ -244,9 +253,9 @@
       update: function(){
       	  this.now = new Date().getTime();
 
-      	  if(Math.round(this.now/1000)%10 ===0 %% (this.now - this.lastCreep >= 1000)){
+      	  if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
       	  	this.lastCreep = this.now;
-      	  	var creepe = me.pool.pull("EnemyCreep", 1000, 0, ());
+      	  	var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
       	  	me.game.world.addChild(creepe, 5);
 
 

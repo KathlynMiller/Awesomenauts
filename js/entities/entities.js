@@ -11,7 +11,8 @@
         	}
 
         }]);
-        
+        this.type = "PlayerEntity";
+        this.health = 20; // health of player
         this.body.setVelocity(5, 20); // setting velocity to its number and changed 0 to 20
        
         this.facing = "right";  //Keeps track of which direction your player is going
@@ -84,6 +85,11 @@
 
         this._super(me.Entity, "update", [delta]);
         return true;
+ 	},
+
+ 	loseHealth: function(response) {
+ 		this.health = this.health - damage;
+ 		console.log(this.health);
  	},
     
     collideHandler:function(response) {
@@ -270,6 +276,24 @@
   				response.b.loseHealth(1);
   			}
 
+  		}else if (response.b.type==='PlayerEntity'){
+  			var xdif = this.pos.x - response.b.pos.x;
+  			this.attacking=true;
+  			//this.lastAttacking=this.now; 
+  			
+  			 if(xdif>0) {
+  				//keeps moving the creep to right to maintain its position
+  			    this.pos.x = this.pos.x + 1;
+  			    this.body.vel.x = 0;
+  		    }
+  			// checks that it has been at least 1 second since this creep hit a base
+  			if((this.now-this.lastHit >= 1000 && xdif>0)){
+  				//updates the lastHit timer
+  				this.lastHit = this.now;
+  				//makes the player ball its loseHealth function and passes it a
+  				//damage of 1
+  				response.b.loseHealth(1);
+  			}
   		}
   	}
   });

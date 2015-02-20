@@ -36,9 +36,6 @@
 
  		if(this.health <= 0){
  			this.dead = true;
- 			this.pos.x = 10;
- 			this.pos.y = 0;
- 			this.health = game.data.playerHealth;
  		}
  		if(me.input.isKeyPressed("right")) {
  			//adds to the postion of my x by adding the velocity defined above in
@@ -114,11 +111,11 @@
     		}
 
     		else if(xdif>-35 && this.facing==='right' && (xdif<0)){ //face right helping the player
-    		this.body.vel.x = 0;
-    			this.pos.x = this.pos.x -1;
+    		    this.body.vel.x = 0;
+    			//this.pos.x = this.pos.x -1;
     		}else if(xdif<70 && this.facing==='left' && xdif>0) { //face left helping the player
                 this.body.vel.x = 0;
-                this.pos.x = this.pos.x +1  
+                //this.pos.x = this.pos.x +1  
 
             }
 
@@ -132,12 +129,12 @@
             var ydif = this.pos.y - response.b.pos.y;
 
             if (xdif>0){
-                this.pos.x = this.pos.x + 1;
+                //this.pos.x = this.pos.x + 1;
                 if(this.facing==="left"){ // postiion facing left
                 	this.body.vel.x = 0;
                 }
             }else{
-                this.pos.x = this.pos.x - 1;
+               // this.pos.x = this.pos.x - 1;
                 if(this.facing==="right"){ // position facing right
                 	this.body.vel.x = 0;
                 }
@@ -346,6 +343,11 @@
 
       update: function(){
       	  this.now = new Date().getTime();
+
+      	  if(game.data.player.dead){ 
+      	      me.game.world.removeChild(game.data.player); //for my player to reset when dead
+      	  	  me.state.current().resetPlayer(10, 0)
+      	  }
 
       	  if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
       	  	this.lastCreep = this.now;

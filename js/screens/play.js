@@ -8,6 +8,8 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		me.levelDirector.loadLevel("level01");
 
+		this.resetPlayer(0, 420);
+
 		var player = me.pool.pull("player", 0, 0, {}); /*making a vatriable for the player*/
 		me.game.world.addChild(player, 5); /* where it has to be placed in the game*/
 
@@ -31,5 +33,11 @@ game.PlayScreen = me.ScreenObject.extend({
 	onDestroyEvent: function() {
 		// remove the HUD from the game world
 		me.game.world.removeChild(this.HUD);
+	},
+
+	resetPlayer: function(x, y){
+      game.data.player = me.pool.pull("player", x, y, ()); // for our player 
+      me.game.world.addChild(game.data.player, 5);
 	}
+
 });

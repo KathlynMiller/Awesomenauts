@@ -19,6 +19,7 @@
         this.now = new Date().getTime();
         this.lastHit = this.now;
         this.dead = false;
+        this.attack = game.data.playerAttack; // for player entity
         this.lastAttack = new Date().getTime(); //havent used this
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
 
@@ -62,7 +63,7 @@
 
  		if(me.input.isKeyPressed("attack")) {
  		  if(!this.renderable.isCurrentAnimation("attack")) {
- 			console.log(!this.renderable.isCurrentAnimation("attack"));
+ 			
             //sets the currnet animation to attak and once that is over
             //goes back to the idle animation
 
@@ -94,7 +95,7 @@
 
  	loseHealth: function(response) {
  		this.health = this.health - damage;
- 		console.log(this.health);
+ 		
  	},
     
     collideHandler:function(response) {
@@ -120,7 +121,7 @@
             }
 
             if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer) { //how many times hitting tower to destroy
-            	console.log("tower Hit"); //hitting tower
+            	
             	this.lastHit = this.now;
             	response.b.loseHealth(game.data.playerAttack); // tower losing health
             }
@@ -144,6 +145,13 @@
     			  ((xdif>0) && this.racing==="left") || ((xdif<0) && this.facing==="right")
     			  ){
     			this.lastHit = this.now; // last hit
+    		  //if the creeps health is less than our attack, execute code in if statement
+    		    if(response.b.health <= game.data.playerAttack){ // updating the attack
+    		    	// adds more gold for a creep kill
+                     game.data.gold += 1;  
+                     console.log("Current gold: " + game.data.playerAttack)
+    		    }
+
     			response.b.loseHealth(game.data.playerAttack); // losing health
     		}
     	}
@@ -275,7 +283,7 @@
     },
 
   	update: function(delta) { 
-  		//console.log(this.health); // whats my creeps health
+  		
   		if(this.health <= 0){
   			me.game.world.removeChild(this);
   		}
@@ -337,7 +345,7 @@
       init: function(x, y, settings){
           this.now = new Date().getTime();
           this.lastCreep = new  Date().getTime();
-
+          this.paused = false;
           this.alwaysUpdate = true;
       },
 
@@ -347,6 +355,13 @@
       	  if(game.data.player.dead){ 
       	      me.game.world.removeChild(game.data.player); //for my player to reset when dead
       	  	  me.state.current().resetPlayer(10, 0)
+      	  }
+
+          if(Math.round(this.now/1000)%20 ===0 && (this.now - this.lastCreep >= 1000)){
+      	  	  game.data.gold += 1;
+      	  	  console.log("Current gold: " + game.data.gold);
+
+
       	  }
 
       	  if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){

@@ -60,8 +60,8 @@
         }
 
 
- 		 if(me.input.isKeyPressed("attack")) {
- 			if(!this.renderable.isCurrentAnimation("attack")) {
+ 		if(me.input.isKeyPressed("attack")) {
+ 		  if(!this.renderable.isCurrentAnimation("attack")) {
  			console.log(!this.renderable.isCurrentAnimation("attack"));
             //sets the currnet animation to attak and once that is over
             //goes back to the idle animation
@@ -311,7 +311,7 @@
   				response.b.loseHealth(game.data.enemyCreepAttack);
   			}
 
-  		}else if (response.b.type==='PlayerEntity'){
+  		    }else if (response.b.type==='PlayerEntity'){
   			var xdif = this.pos.x - response.b.pos.x;
   			this.attacking=true;
   			//this.lastAttacking=this.now; 

@@ -9,7 +9,7 @@ game.resources = [
     {name: "player", type:"image", src: "data/img/orcSpear.png"}, /*adding player images to game*/
     {name: "tower", type:"image", src: "data/img/tower_round.svg.png"}, /*adding player images to game*/
     {name: "creep1", type:"image", src: "data/img/brainmonster.png"}, // adding creep enemy to game
-     {name: "title-screen", type:"image", src: "data/img/title.png"}, // adding title screen to game
+    {name: "title-screen", type:"image", src: "data/img/title.png"}, // adding title screen to game
 	/* Atalases
 	 * @example
 	 * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},

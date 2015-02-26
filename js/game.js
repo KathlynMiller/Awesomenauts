@@ -21,7 +21,7 @@ var game = {
 		playerMoveSpeed: 5,
 		creepMoveSpeed: 5,
 		gameManager: "",
-		player ""
+		player: ""
 
 
 	},

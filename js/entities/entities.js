@@ -1,5 +1,21 @@
  game.PlayerEntity = me.Entity.extend({
  	init: function(x, y, settings) {   /*making a function for the player*/
+        this.setSuper();
+        this.setPlayerTimers();
+        this.setAttributes();
+        this.type = "PlayerEntity";
+        this.setFlags();
+      
+        me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
+
+        this.addAnimation();
+
+        this.renderable.setCurrentAnimation("idle");
+
+
+ 	},
+
+ 	setSuper: function(){ // function for setSuper for player refactoring
         this._super(me.Entity,'init', [x, y,  {
         	image: "player",
         	width: 64,  /*height and width is need for the size of the image of the player*/
@@ -9,27 +25,32 @@
         	getShape: function() {
         		return(new me.Rect(0, 0, 64, 64)).toPolygon();
         	}
+         }]);
+ 	},
 
-        }]);
-        this.type = "PlayerEntity";
-        this.health = game.data.playerHealth; // health of player
-        this.body.setVelocity(game.data.playerMoveSpeed, 20); // setting velocity to its number and changed 0 to 20
-       
-        this.facing = "right";  //Keeps track of which direction your player is going
-        this.now = new Date().getTime();
-        this.lastHit = this.now;
-        this.dead = false;
+ 	setPLayerTimers: function(){ // setting playertime function
+       this.now = new Date().getTime();
+       this.lastHit = this.now;
+       this.lastAttack = new Date().getTime(); //havent used this
+ 	},
+
+ 	setAttributes: function(){// setting attributes function
+       this.health = game.data.playerHealth; // health of player
+       this.body.setVelocity(game.data.playerMoveSpeed, 20); // setting velocity to its number and changed 0 to 20
         this.attack = game.data.playerAttack; // for player entity
-        this.lastAttack = new Date().getTime(); //havent used this
-        me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); // helpful/useful for our player entity
+       
+ 	},
 
-        this.renderable.addAnimation("idle", [78]);
+ 	setFlags: function(){
+ 		//Keeps track of which direction your character is going
+        this.facing = "right";
+        this.dead = false;
+ 	},
+
+ 	addAnimation: function(){
+ 		this.renderable.addAnimation("idle", [78]);
         this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); // using images for animation
         this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
-
-        this.renderable.setCurrentAnimation("idle");
-
-
  	},
 
  	update: function(delta) { 

@@ -54,33 +54,13 @@
  	},
 
  	update: function(delta) { 
- 		this.now = new Date().getTime() // havent used yet
-
- 		if(this.health <= 0){
- 			this.dead = true;
- 		}
- 		if(me.input.isKeyPressed("right")) {
- 			//adds to the postion of my x by adding the velocity defined above in
-            //setVelocity() and multiplying it by me.timer.tick.
-            //me.timer.tick makes the movement look smooth
- 			this.body.vel.x += this.body.accel.x * me.timer.tick;
- 			this.facing = "right";
- 			 //Keeps track of which direction your player is going
- 			this.flipX(true);
- 	    }else if(me.input.isKeyPressed("left")) {  //making my player move to the right
- 	       this.facing = "left";
- 	        //Keeps track of which direction your player is going
- 	       this.body.vel.x -=this.body.accel.x * me.timer.tick;
- 	       this.flipX(false);
- 		}else{
- 		   this.body.vel.x = 0;
- 		}
+ 		this.now = new Date().getTime(); // havent used yet
         
-        if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling) { // making my player jump
-        	this.jumping = true;
-        	this.body.vel.y -= this.body.accel.y * me.timer.tick;
-        }
+        this.dead = checkIfDead(); // linked with checkIf dead function
 
+        this.checkKeyPressesAndMove(); // linked with checkKeyPressesMOve functioin
+        
+ 		
 
  		if(me.input.isKeyPressed("attack")) {
  		  if(!this.renderable.isCurrentAnimation("attack")) {
@@ -114,6 +94,48 @@
         return true;
  	},
 
+ 	checkIfDead: function(){
+        if(this.health <= 0){
+ 		   return true;
+ 		}
+ 		return false;
+ 	},
+
+ 	checkKeyPressesAndMove: function(){
+ 		if(me.input.isKeyPressed("right")) {
+ 		    this.moveRight();// linked with moveRight function
+ 	    }else if(me.input.isKeyPressed("left")) {  //making my player move to the right
+ 	        this.moveLeft(); // linked with moveLeft function
+ 		}else{
+ 		   this.body.vel.x = 0;
+ 		}
+        
+        if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling) { // making my player jump
+        	this.jump(); // linked with move jump function
+        }
+
+ 	}
+
+ 	moveRight: function(){ // function for player moving right
+        	//adds to the postion of my x by adding the velocity defined above in
+            //setVelocity() and multiplying it by me.timer.tick.
+            //me.timer.tick makes the movement look smooth
+ 			this.body.vel.x += this.body.accel.x * me.timer.tick;
+ 			this.facing = "right";
+ 			this.flipX(true);
+
+ 	},
+
+ 	moveLeft: function(){ // function for player moving left
+           this.facing = "left";
+ 	       this.body.vel.x -=this.body.accel.x * me.timer.tick;
+ 	       this.flipX(false);
+ 	},
+    
+    jump: function(){ // function for making the player jump
+    	    this.jumping = true;
+        	this.body.vel.y -= this.body.accel.y * me.timer.tick;
+    }
  	loseHealth: function(response) {
  		this.health = this.health - damage;
  		
@@ -145,8 +167,8 @@
             	
             	this.lastHit = this.now;
             	response.b.loseHealth(game.data.playerAttack); // tower losing health
-            }
-    	}else if(response.b.type==='EnemyCreep'){
+               }
+    	    }else if(response.b.type==='EnemyCreep'){
             var xdif = this.pos.x - response.b.pos.x; //keep track of their differences
             var ydif = this.pos.y - response.b.pos.y;
 

@@ -41,7 +41,7 @@
        
  	},
 
- 	setFlags: function(){
+ 	setFlags: function(){ //setting flags
  		//Keeps track of which direction your character is going
         this.facing = "right";
         this.dead = false;
@@ -143,60 +143,74 @@
     collideHandler:function(response) {
     
     	if(response.b.type ==='EnemyBaseEntity') {
-    		var ydif = this.pos.y - response.b.pos.y;
+    		 this.collideWithEnemyBase(response); // links with coddileWithEnemyBase function
+    	    }else if(response.b.type==='EnemyCreep'){
+               this.collideWithEnemyCreep(response);
+    	}
+    },
+ 	
+ 	colldieWithEnemyBase: function(){
+ 		    var ydif = this.pos.y - response.b.pos.y;
     		var xdif = this.pos.x -response.b.pos.x;
             
-            
-
             if(ydif<-40 && xdif< 70 && xdif>-35) { // added this if statement to help with the collision
                 this.body.falling = false;
                 this.body.vel.y = -1;
     		}
-
     		else if(xdif>-35 && this.facing==='right' && (xdif<0)){ //face right helping the player
     		    this.body.vel.x = 0;
-    			//this.pos.x = this.pos.x -1;
+    			
     		}else if(xdif<70 && this.facing==='left' && xdif>0) { //face left helping the player
                 this.body.vel.x = 0;
-                //this.pos.x = this.pos.x +1  
-
             }
-
-            if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer) { //how many times hitting tower to destroy
-            	
+            if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer) { //how many times hitting tower to destroy            	
             	this.lastHit = this.now;
             	response.b.loseHealth(game.data.playerAttack); // tower losing health
-               }
-    	    }else if(response.b.type==='EnemyCreep'){
-            var xdif = this.pos.x - response.b.pos.x; //keep track of their differences
+            }
+ 	},
+
+ 	    collideWithEnemyCreep: function(response){ // function for colliding with emeny creep
+ 	    	var xdif = this.pos.x - response.b.pos.x; //keep track of their differences
             var ydif = this.pos.y - response.b.pos.y;
 
-            if (xdif>0){
-                //this.pos.x = this.pos.x + 1;
+            this.stopMovement(xdif); // links with stopMovement function
+
+    		if(this.checkAttack(xidf, ydif)){
+    			this.hitCreep(response); // links with hit creep function with a response
+    		};
+ 	    },
+
+ 	    stopMovement: function(xdif){ // movement for player
+ 	    	if (xdif>0){
                 if(this.facing==="left"){ // postiion facing left
                 	this.body.vel.x = 0;
                 }
             }else{
-               // this.pos.x = this.pos.x - 1;
                 if(this.facing==="right"){ // position facing right
                 	this.body.vel.x = 0;
                 }
             }
-    		if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer
+ 	    },
+
+ 	    checkAttack: function(xdif, ydif){ // checking attack function
+ 	    	if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer
     			  && (Math.abs(ydif) <=40) && 
     			  ((xdif>0) && this.racing==="left") || ((xdif<0) && this.facing==="right")
     			  ){
     			this.lastHit = this.now; // last hit
     		  //if the creeps health is less than our attack, execute code in if statement
-    		    if(response.b.health <= game.data.playerAttack){ // updating the attack
+    		    return true;
+    		}
+    		return false;
+ 	    },
+
+ 	    hitCreep: function(){ // hitting creep function
+ 	    	if(response.b.health <= game.data.playerAttack){ // updating the attack
     		    	// adds more gold for a creep kill
                      game.data.gold += 1;  
                      console.log("Current gold: " + game.data.playerAttack)
     		    }
 
     			response.b.loseHealth(game.data.playerAttack); // losing health
-    		}
-    	}
-    }
- 	
+ 	    },
  });

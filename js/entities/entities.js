@@ -45,6 +45,7 @@
  		//Keeps track of which direction your character is going
         this.facing = "right";
         this.dead = false;
+        this.attacking = false;
  	},
 
  	addAnimation: function(){
@@ -55,41 +56,11 @@
 
  	update: function(delta) { 
  		this.now = new Date().getTime(); // havent used yet
-        
         this.dead = checkIfDead(); // linked with checkIf dead function
-
         this.checkKeyPressesAndMove(); // linked with checkKeyPressesMOve functioin
-        
- 		
-
- 		if(me.input.isKeyPressed("attack")) {
- 		  if(!this.renderable.isCurrentAnimation("attack")) {
- 			
-            //sets the currnet animation to attak and once that is over
-            //goes back to the idle animation
-
-
-                this.renderable.setCurrentAnimation("attack", "idle");
-                //Makes it so that the next time we start this sequence we begin
-                //from the first animation, not wherever we left off when we 
-                //switched to another animation
-        
-                this.renderable.setAnimationFrame();
- 		    }
-        }  
-        else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")) { // velocity
- 		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
-              this.renderable.setCurrentAnimation("walk");  // telling
-
- 		  }
-        }else if(!this.renderable.isCurrentAnimation("attack")){
-        	      this.renderable.setCurrentAnimation("idle");
-        } 
-
-       
+ 		this.setAnimation();
         me.collision.check(this, true, this.collideHandler.bind(this), true);
         this.body.update(delta);
-
         this._super(me.Entity, "update", [delta]);
         return true;
  	},
@@ -113,8 +84,9 @@
         if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling) { // making my player jump
         	this.jump(); // linked with move jump function
         }
-
- 	}
+        
+        this.attacking = me.input.isKeyPressed("attack");
+ 	},
 
  	moveRight: function(){ // function for player moving right
         	//adds to the postion of my x by adding the velocity defined above in
@@ -135,7 +107,34 @@
     jump: function(){ // function for making the player jump
     	    this.jumping = true;
         	this.body.vel.y -= this.body.accel.y * me.timer.tick;
-    }
+    },
+
+    setAnimation: function(){ // function for animation
+       if(this.attacking) {
+ 		  if(!this.renderable.isCurrentAnimation("attack")) {
+ 			
+            //sets the currnet animation to attak and once that is over
+            //goes back to the idle animation
+
+
+                this.renderable.setCurrentAnimation("attack", "idle");
+                //Makes it so that the next time we start this sequence we begin
+                //from the first animation, not wherever we left off when we 
+                //switched to another animation
+        
+                this.renderable.setAnimationFrame();
+ 		    }
+        }  
+        else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")) { // velocity
+ 		  if(!this.renderable.isCurrentAnimation("walk")) { // not teling the player to walk using an if statement
+              this.renderable.setCurrentAnimation("walk");  // telling
+
+ 		  }
+        }else if(!this.renderable.isCurrentAnimation("attack")){
+        	      this.renderable.setCurrentAnimation("idle");
+        } 
+
+    },
  	loseHealth: function(response) {
  		this.health = this.health - damage;
  		

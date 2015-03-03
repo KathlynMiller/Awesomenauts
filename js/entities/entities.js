@@ -1,6 +1,6 @@
  game.PlayerEntity = me.Entity.extend({
  	init: function(x, y, settings) {   /*making a function for the player*/
-        this.setSuper();
+        this.setSuper(x, y);
         this.setPlayerTimers();
         this.setAttributes();
         this.type = "PlayerEntity";
@@ -15,7 +15,7 @@
 
  	},
 
- 	setSuper: function(){ // function for setSuper for player refactoring
+ 	setSuper: function(x, y){ // function for setSuper for player refactoring
         this._super(me.Entity,'init', [x, y,  {
         	image: "player",
         	width: 64,  /*height and width is need for the size of the image of the player*/
@@ -56,7 +56,7 @@
 
  	update: function(delta) { 
  		this.now = new Date().getTime(); // havent used yet
-        this.dead = checkIfDead(); // linked with checkIf dead function
+        this.dead = this.checkIfDead(); // linked with checkIf dead function
         this.checkKeyPressesAndMove(); // linked with checkKeyPressesMOve functioin
  		this.setAnimation();
         me.collision.check(this, true, this.collideHandler.bind(this), true);
@@ -212,5 +212,5 @@
     		    }
 
     			response.b.loseHealth(game.data.playerAttack); // losing health
- 	    },
+ 	    }
  });

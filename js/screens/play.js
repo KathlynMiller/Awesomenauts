@@ -13,8 +13,11 @@ game.PlayScreen = me.ScreenObject.extend({
 		var player = me.pool.pull("player", 0, 0, {}); /*making a vatriable for the player*/
 		me.game.world.addChild(player, 5); /* where it has to be placed in the game*/
 
-		var gamemanager = me.pool.pull("GameManager", 0, 0, {});
-		me.game.world.addChild(gamemanager, 0);
+		var gameTimerManager = me.pool.pull("GameManager", 0, 0, {}); // loading gameTimeManager
+		me.game.world.addChild(gameTimermanager, 0);
+
+		var heroDeathManager = me.pool.pull("HeroDeathManager", 0, 0, {}); // loading heroDeathManager
+		me.game.world.addChild(heroDeathmanager, 0);
 
 		me.input.bindKey(me.input.KEY.RIGHT, "right"); // right key
 		me.input.bindKey(me.input.KEY.LEFT, "left");  // left key

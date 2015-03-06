@@ -28,7 +28,7 @@
          }]);
  	},
 
- 	setPLayerTimers: function(){ // setting playertime function
+ 	setPlayerTimers: function(){ // setting playertime function
        this.now = new Date().getTime();
        this.lastHit = this.now;
        this.lastAttack = new Date().getTime(); //havent used this

@@ -33,6 +33,28 @@ game.TitleScreen = me.ScreenObject.extend({
             }
         })));
 
+        me.game.world.addChild(new (me.Renderable.extend({
+            init: function(){
+                this._super(me.Renderable, 'init', [380, 340, 250, 50]);
+                this.font = new me.Font("Arial", 46, "white"); //play around with fonts
+                me.input.registerPointEvent('pointerdown', this, this.newGame.bind(this), true);
+            },
+
+            draw: function(renderer){
+            	this.font.draw(renderer.getContext(), "CONTINUE", this.pos.x, this.pos.y); // passing the context of where we are
+            	
+            },
+
+            update: function(dt){
+                  return true;
+            },
+
+            newGame: function(){
+                  me.input.releasePointEvent('pointerdown', this); // used in newGame function
+                  me.state.remove(me.state.PLAY);
+            }
+        })));
+
 	},
 	
 	

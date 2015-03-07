@@ -49,7 +49,13 @@ game.TitleScreen = me.ScreenObject.extend({
                   return true;
             },
 
-            newGame: function(){
+            newGame: function(){ // setting newGame function
+            	  game.data.exp = me.save.exp; // for exps in game
+            	  game.data.exp1 = me.save.exp1;
+            	  game.data.exp2 = me.save.exp2;
+            	  game.data.exp3 = me.save.exp3;
+            	  game.data.exp4 = me.save.exp4;
+            	  
                   me.input.releasePointEvent('pointerdown', this); // used in newGame function
                   me.state.remove(me.state.PLAY);
             }

@@ -11,7 +11,7 @@ game.resources = [
     {name: "creep1", type:"image", src: "data/img/brainmonster.png"}, // adding creep enemy to game
     {name: "title-screen", type:"image", src: "data/img/title.png"}, // adding title screen to game
     {name: "exp-screen", type:"image", src: "data/img/loadpic.png"}, // adding title screen to game
-
+    {name: "gold-screen", type:"image", src: "data/img/spend.png"}, // adding title screen to game
 	/* Atalases
 	 * @example
 	 * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},

@@ -78,16 +78,50 @@ game.ExperienceManager = Object.extend({ //making experience manager
 
 });
 
-game.SpendGold = Object.extend({
+game.SpendGold = Object.extend({ // to buy gold and pauseed the game
 	init: function(x, y, settings){
           this.now = new Date().getTime();
           this.lastBuy = new  Date().getTime();
           this.paused = false;
           this.alwaysUpdate = true;
+          this.updateWhenPaused = true;
+          this.buying = false; // that the beginning of the game we will not be buying
     },
 
     update: function(){
+    	this.now = new Date().getTime();
+
+    	if(me.input.isKeyPressed("buy") && this.now-this.lastBuy >=1000){
+    		this.lastBuy = this.now;
+            if(!this.buying)
+            	this.startBuying();  // links to startBuying function
+    	    }else{
+    		    this.stopBuying(); // links to stopBuying function
+    	    }
+
+        }
+
     	return true;
-    }
-    
+    },
+
+    startBuying: function(){
+        this.buying = true;
+        me.state.pause(me.state.PLAY);
+        game.data.pausePos = me.game.viewport.localToWorld(0, 0);
+        game.data.buyscreen = new me.Sprite(game.data.pausePos.x, game.data.pausePos.y, me.loader.getImage('gold-screen'));
+        game.data.buyscreen.updateWhenPaused = true;
+        game.data.buyscreen.setOpacity(0.8);
+        me.game.world.addChild(game.data.buyscreen, 34);
+        game.data.player.body.setVelocity(0, 0);
+    },
+
+    stopBuying: function(){
+        this.buying = false;
+        me.state.resume(me.state.PLAY);
+        game.data.player.body.setVelocity(game.data.playerMoveSpeed, 20);
+        me.game.world.removeChild(game.data.buyscreen);
+    },
+
+
+
 });

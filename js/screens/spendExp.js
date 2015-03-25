@@ -34,11 +34,10 @@ game.SpendExp = me.ScreenObject.extend({
 
         })));
         
-        this.handler - me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge{
+        this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge){
             if(action === F1){
                  if(game.data.exp >= exp1cost){
                     game.data.exp1 += 1; // adding 1 
-                    game.data.exp -= exp1cost;// substracting 10
                     me.state.change(me.state.PLAY);
                  }else{
                      console.log("not enough experience");
@@ -52,8 +51,8 @@ game.SpendExp = me.ScreenObject.extend({
             }else if(action === "F5"){
                 me.state.change(me.state.PLAY);
             }
-        }));
-        }
+        });
+        
 	},
 	
 	

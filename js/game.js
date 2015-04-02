@@ -25,13 +25,20 @@ var game = {
 		player: "",
 		exp: 0, //as many as you want
 		gold: 0,
+		ability1: 0,
+		ability2: 0,
+		ablilty3:0,
+        skill: 0,
+        skill2: 0,
+        skill3: 0,
 		exp1: 0,
 		exp2: 0,
 		exp3: 0,
 		exp4: 0,
 		win:"",
 		pausePos: "",
-		buyscreen: ""
+		buyscreen: "",
+		buytext: "s"
 
 
 	},

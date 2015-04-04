@@ -101,6 +101,8 @@ game.SpendGold = Object.extend({ // to buy gold and pauseed the game
 
         }
 
+        this.checkBuyKeys(); // links with checkBuyKeys function
+
     	return true;
     },
 
@@ -160,8 +162,74 @@ game.SpendGold = Object.extend({ // to buy gold and pauseed the game
         me.input.unbindKey(me.input.KEY.F6, "F6", true); // unbinding f6 key
         me.game.world.removeChild(game.data.buytext);
 
-    }
+    },
 
+    checkBuyKeys: function() {
+    	if(me.input.isKeyPressed("F1")){ //pressing F1 into 1
+            if(this.checkCost(1)){ // links with checkCost function
+                   this.makePurchase(1); //links with makePurchase function
+            }
+    	}else if(me.input.isKeyPressed("F2")){ //pressing F2 into 2
+            if(this.checkCost(2)){
+                   this.makePurchase(2);
+             } 
+    	}else if(me.input.isKeyPressed("F3")){ //pressing F3 into 3
+             if(this.checkCost(3)){
+                   this.makePurchase(3);
+             }
+    	}else if(me.input.isKeyPressed("F4")){ // pressing F4 into 4
+             if(this.checkCost(4)){
+                   this.makePurchase(4);
+             }
+    	}else if(me.input.isKeyPressed("F5")){ // pressing F5 into 5
+             if(this.checkCost(5)){
+                   this.makePurchase(5);
+             }
+    	}else if(me.input.isKeyPressed("F6")){ // pressing F6 into 6
+             if(this.checkCost(6)){
+                   this.makePurchase(6);
+             }
+    	}
+    },
 
+    checkCost: function(skill){
+    	if(skill===1 && (game.data.gold >= ((game.data.skill1+1)*10))){
+            return true;
+    	}else if(skill===2 && (game.data.gold >= ((game.data.skill2+1)*10))){
+            return true;
+        }else if(skill===3 && (game.data.gold >= ((game.data.skill3+1)*10))){
+            return true;
+        }else if(skill===4 && (game.data.gold >= ((game.data.ability1+1)*10))){
+            return true;
+        }else if(skill===5 && (game.data.gold >= ((game.data.ability2+1)*10))){
+            return true;
+        }else if(skill===6 && (game.data.gold >= ((game.data.ability3+1)*10))){
+            return true;
+        }else{
+        	return false;
+        }
+    },
+
+    makePurchase: function(skill){
+    	 if(skill === 1){
+             game.data.gold -= ((game.data.skill1 +1)* 10);
+             game.data.skill1 += 1;
+             game.data.player.attack += 1;
+         }else if(skill ===2){
+             game.data.gold -= ((game.data.skill2 +1)* 10);
+             game.data.skill2 += 1;
+         }else if(skill ===3){
+         	 game.data.gold -= ((game.data.skill3 +1)* 10);
+             game.data.skill3 += 1;
+         }else if(skill ===4){
+         	 game.data.gold -= ((game.data.ability1 +1)* 10);
+             game.data.ability1 += 1;
+         }else if(skill ===5){
+         	 game.data.gold -= ((game.data.ability2 +1)* 10);
+             game.data.ability2 += 1;
+         }else if(skill ===6){
+         	 game.data.gold -= ((game.data.ability3 +1)* 10);
+             game.data.ability3 += 1;
+         }
 
 });

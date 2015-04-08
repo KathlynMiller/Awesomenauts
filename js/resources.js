@@ -12,6 +12,8 @@ game.resources = [
     {name: "title-screen", type:"image", src: "data/img/title.png"}, // adding title screen to game
     {name: "exp-screen", type:"image", src: "data/img/loadpic.png"}, // adding title screen to game
     {name: "gold-screen", type:"image", src: "data/img/spend.png"}, // adding title screen to game
+    {name: "load-screen", type:"image", src: "data/img/loadpic.png"},
+    {name: "new-screen", type:"image", src: "data/img/newpic.png"},
 	/* Atalases
 	 * @example
 	 * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},
